@@ -20,6 +20,12 @@ public class MenuServiceImpl implements IMenuService {
 	private MenuMapper menuMapper;
 	
 	@Override
+	public Res add(Menu menu) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
 	@Transactional(readOnly=true)
 	public Res info(Integer roleId) {
 		try {
