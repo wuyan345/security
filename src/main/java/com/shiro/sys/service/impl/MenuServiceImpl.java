@@ -21,8 +21,19 @@ public class MenuServiceImpl implements IMenuService {
 	
 	@Override
 	public Res add(Menu menu) {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			menuMapper.insert(menu);
+			return Res.successMsg("添加菜单成功");
+		} catch (Exception e) {
+			throw new BaseException("添加菜单失败", e);
+		}
+	}
+
+	@Override
+	@Transactional(readOnly=true)
+	public Res list() {
+		List<Menu> menuList = menuMapper.selectAll();
+		return Res.successData(menuList);
 	}
 
 	@Override

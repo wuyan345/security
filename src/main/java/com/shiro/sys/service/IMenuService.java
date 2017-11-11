@@ -7,5 +7,7 @@ public interface IMenuService {
 
 	Res add(Menu menu);
 	
+	Res list();
+	
 	Res info(Integer roleId);
 }

@@ -33,4 +33,10 @@ public interface MenuMapper {
      */
     List<String> selectPermissionByRoleId(Integer roleId);
     
+    /**
+     * 返回所有菜单
+     * @return
+     */
+    List<Menu> selectAll();
+    
 }
