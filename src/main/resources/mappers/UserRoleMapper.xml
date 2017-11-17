@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.shiro.dao.UserRoleMapper">
-  <resultMap id="BaseResultMap" type="com.shiro.pojo.UserRole">
+<mapper namespace="com.shiro.sys.dao.UserRoleMapper">
+  <resultMap id="BaseResultMap" type="com.shiro.sys.pojo.UserRole">
     <constructor>
       <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="user_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
@@ -21,13 +21,13 @@
     delete from user_role
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.shiro.pojo.UserRole">
+  <insert id="insert" parameterType="com.shiro.sys.pojo.UserRole">
     insert into user_role (id, user_id, role_id
       )
     values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{roleId,jdbcType=INTEGER}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.shiro.pojo.UserRole">
+  <insert id="insertSelective" parameterType="com.shiro.sys.pojo.UserRole">
     insert into user_role
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -52,7 +52,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.shiro.pojo.UserRole">
+  <update id="updateByPrimaryKeySelective" parameterType="com.shiro.sys.pojo.UserRole">
     update user_role
     <set>
       <if test="userId != null">
@@ -64,7 +64,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.shiro.pojo.UserRole">
+  <update id="updateByPrimaryKey" parameterType="com.shiro.sys.pojo.UserRole">
     update user_role
     set user_id = #{userId,jdbcType=INTEGER},
       role_id = #{roleId,jdbcType=INTEGER}

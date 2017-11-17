@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.shiro.dao.RoleMenuMapper">
-  <resultMap id="BaseResultMap" type="com.shiro.pojo.RoleMenu">
+<mapper namespace="com.shiro.sys.dao.RoleMenuMapper">
+  <resultMap id="BaseResultMap" type="com.shiro.sys.pojo.RoleMenu">
     <constructor>
       <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="role_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
@@ -21,13 +21,13 @@
     delete from role_menu
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.shiro.pojo.RoleMenu">
+  <insert id="insert" parameterType="com.shiro.sys.pojo.RoleMenu">
     insert into role_menu (id, role_id, menu_id
       )
     values (#{id,jdbcType=INTEGER}, #{roleId,jdbcType=INTEGER}, #{menuId,jdbcType=INTEGER}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.shiro.pojo.RoleMenu">
+  <insert id="insertSelective" parameterType="com.shiro.sys.pojo.RoleMenu">
     insert into role_menu
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -52,7 +52,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.shiro.pojo.RoleMenu">
+  <update id="updateByPrimaryKeySelective" parameterType="com.shiro.sys.pojo.RoleMenu">
     update role_menu
     <set>
       <if test="roleId != null">
@@ -64,10 +64,33 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.shiro.pojo.RoleMenu">
+  <update id="updateByPrimaryKey" parameterType="com.shiro.sys.pojo.RoleMenu">
     update role_menu
     set role_id = #{roleId,jdbcType=INTEGER},
       menu_id = #{menuId,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+  <insert id="batchInsert" parameterType="map">
+  	insert into role_menu
+  	(role_id, menu_id)
+  	values
+  	<foreach collection="list" separator="," index="index" item="item">
+  		(
+  			#{roleId}, #{item}
+  		)
+  	</foreach>
+  </insert>
+  <delete id="batchDelete" parameterType="map">
+  	delete from role_menu
+  	where role_id = #{roleId}
+  	and menu_id in
+  	<foreach collection="list" open="(" separator="," close=")" index="index" item="item">
+  		#{item}
+  	</foreach>
+  </delete>
+  <delete id="batchDeleteAllByRoleId" parameterType="integer">
+  	delete from role_menu
+  	where role_id = #{roleId}
+  </delete>
 </mapper>

@@ -2,6 +2,7 @@ package com.shiro.sys.controller;
 
 
 import java.util.ArrayList;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -21,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.shiro.sys.common.Res;
+import com.shiro.sys.common.annotation.Log;
+import com.shiro.sys.dao.UserMapper;
 import com.shiro.sys.pojo.User;
 import com.shiro.sys.service.IUserService;
 
@@ -34,21 +37,10 @@ public class UserController {
 	private IUserService iUserService;
 	
 	@RequestMapping("/test")
-	public Map test(){
+	public Res<?> test(){
+		System.out.println("进入UserController.test()");
 		iUserService.test();
 		return Res.successMsg("ok");
-	}
-	
-	/**
-	 * 用户登录
-	 * @param username
-	 * @param password
-	 * @return
-	 */
-	@RequestMapping(value="/login", method=RequestMethod.POST)
-	public Res login(String username, String password){
-		logger.info("user: {}, password: {} is logging", username, password);
-		return iUserService.login(username, password);
 	}
 	
 	/**
@@ -56,10 +48,11 @@ public class UserController {
 	 * @param pageNum
 	 * @return
 	 */
-	@RequiresPermissions("sys:user:list")
 	@RequestMapping(value="/list", method=RequestMethod.POST)
+	@RequiresPermissions("sys:user:list")
+	@Log("显示用户列表")
 	public Res list(int pageNum){
-		return Res.successMsg("已进入");
+		return iUserService.list(pageNum);
 	}
 	
 	/**
@@ -69,6 +62,7 @@ public class UserController {
 	 */
 	@RequiresPermissions("sys:user:add")
 	@RequestMapping(value="/add", method=RequestMethod.POST)
+	@Log("添加用户")
 	public Res add(User user, Integer roleId){
 		return iUserService.add(user, roleId);
 	}
@@ -80,6 +74,7 @@ public class UserController {
 	 */
 	@RequiresPermissions("sys:user:edit")
 	@RequestMapping(value="/edit", method=RequestMethod.POST)
+	@Log("用户信息修改")
 	public Res edit(User user){
 		return iUserService.edit(user);
 	}
@@ -89,8 +84,8 @@ public class UserController {
 	 * @param userId
 	 * @return
 	 */
-//	@RequiresPermissions("sys:user:info")
 	@RequestMapping(value="/info/{userId}", method=RequestMethod.POST)
+	@Log("显示当前用户的信息")
 	public Res info(@PathVariable Integer userId){
 		// 防止横向越权
 		User user = (User)SecurityUtils.getSubject().getPrincipal();
@@ -104,6 +99,7 @@ public class UserController {
 	 */
 	@RequiresPermissions("sys:user:delete")
 	@RequestMapping(value="/delete", method=RequestMethod.POST)
+	@Log("删除用户")
 	public Res delete(Integer[] userIdArray){
 		return iUserService.delete(userIdArray);
 	}
@@ -115,18 +111,10 @@ public class UserController {
 	 */
 	@RequiresAuthentication
 	@RequestMapping(value="/changePassword", method=RequestMethod.POST)
+	@Log("修改密码")
 	public Res changePassword(String newPassword){
 		User user = (User) SecurityUtils.getSubject().getPrincipal();
 		return iUserService.changePassword(user.getId(), newPassword);
 	}
 	
-	/**
-	 * 用户登出
-	 * @return
-	 */
-	@RequiresAuthentication
-	@RequestMapping(value="/logout", method=RequestMethod.POST)
-	public Res logout(){
-		return iUserService.logout();
-	}
 }

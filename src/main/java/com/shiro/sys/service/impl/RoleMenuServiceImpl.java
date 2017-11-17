@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.shiro.sys.common.BaseException;
+import com.shiro.sys.common.exception.BaseException;
 import com.shiro.sys.common.Res;
 import com.shiro.sys.dao.RoleMenuMapper;
 import com.shiro.sys.service.IRoleMenuService;
@@ -46,7 +46,7 @@ public class RoleMenuServiceImpl implements IRoleMenuService {
 	@Override
 	public Res delete(Integer roleId) {
 		try {
-			roleMenuMapper.batchDelete(roleId);
+			roleMenuMapper.batchDeleteAllByRoleId(roleId);
 			return Res.successMsg("角色菜单关系删除成功");
 		} catch (Exception e) {
 			throw new BaseException("角色菜单关系删除失败", e);

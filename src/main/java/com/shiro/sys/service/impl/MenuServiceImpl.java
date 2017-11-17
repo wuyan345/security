@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.shiro.sys.common.BaseException;
 import com.shiro.sys.common.Res;
+import com.shiro.sys.common.exception.BaseException;
 import com.shiro.sys.dao.MenuMapper;
 import com.shiro.sys.pojo.Menu;
 import com.shiro.sys.service.IMenuService;
@@ -31,8 +31,15 @@ public class MenuServiceImpl implements IMenuService {
 
 	@Override
 	@Transactional(readOnly=true)
-	public Res list() {
+	public Res listFirstClass() {
 		List<Menu> menuList = menuMapper.selectAll();
+		return Res.successData(menuList);
+	}
+
+	@Override
+	@Transactional(readOnly=true)
+	public Res listSecondClass(Integer menuId) {
+		List<Menu> menuList = menuMapper.selectChildMenu(menuId);
 		return Res.successData(menuList);
 	}
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.shiro.dao.MenuMapper">
-  <resultMap id="BaseResultMap" type="com.shiro.pojo.Menu">
+<mapper namespace="com.shiro.sys.dao.MenuMapper">
+  <resultMap id="BaseResultMap" type="com.shiro.sys.pojo.Menu">
     <constructor>
       <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="parent_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
@@ -24,7 +24,7 @@
     delete from menu
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.shiro.pojo.Menu">
+  <insert id="insert" parameterType="com.shiro.sys.pojo.Menu">
     insert into menu (id, parent_id, name, 
       type, url, permission
       )
@@ -32,7 +32,7 @@
       #{type,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR}, #{permission,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.shiro.pojo.Menu">
+  <insert id="insertSelective" parameterType="com.shiro.sys.pojo.Menu">
     insert into menu
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -75,7 +75,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.shiro.pojo.Menu">
+  <update id="updateByPrimaryKeySelective" parameterType="com.shiro.sys.pojo.Menu">
     update menu
     <set>
       <if test="parentId != null">
@@ -96,7 +96,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.shiro.pojo.Menu">
+  <update id="updateByPrimaryKey" parameterType="com.shiro.sys.pojo.Menu">
     update menu
     set parent_id = #{parentId,jdbcType=INTEGER},
       name = #{name,jdbcType=VARCHAR},
@@ -106,9 +106,23 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   
+  <select id="selectByRoleId" resultMap="BaseResultMap" parameterType="integer">
+  	select <include refid="Base_Column_List" /> from role r
+  		left join role_menu rm on r.id = rm.role_id
+  		left join menu m on rm.role_id = m.id
+  	where r.id = #{roleId}
+  </select>
   <select id="selectPermissionByRoleId" resultType="string" parameterType="integer">
-  	select permission 
-  	from role r left join role_menu rm on r.id = rm.role_id
-  	left join menu m on rm.menu_id = m.id
+  	select permission from role r
+  		left join role_menu rm on r.id = rm.role_id
+  		left join menu m on rm.menu_id = m.id
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+  	select <include refid="Base_Column_List" /> from menu
+  	where parent_id = 1;
+  </select>
+  <select id="selectChildMenu" resultMap="BaseResultMap" parameterType="integer">
+  	select <include refid="Base_Column_List" /> from menu
+  	where parent_id = #{menuId}
   </select>
 </mapper>

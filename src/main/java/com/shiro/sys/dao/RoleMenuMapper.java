@@ -42,6 +42,6 @@ public interface RoleMenuMapper {
      * @param roleId
      * @return
      */
-    int batchDelete(Integer roleId);
+    int batchDeleteAllByRoleId(Integer roleId);
     
 }

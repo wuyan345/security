@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.shiro.dao.GroupMapper">
-  <resultMap id="BaseResultMap" type="com.shiro.pojo.Group">
+<mapper namespace="com.shiro.sys.dao.GroupMapper">
+  <resultMap id="BaseResultMap" type="com.shiro.sys.pojo.Group">
     <constructor>
       <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="parent_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
@@ -22,13 +22,13 @@
     delete from group
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.shiro.pojo.Group">
+  <insert id="insert" parameterType="com.shiro.sys.pojo.Group">
     insert into group (id, parent_id, name, 
       desc)
     values (#{id,jdbcType=INTEGER}, #{parentId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
       #{desc,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.shiro.pojo.Group">
+  <insert id="insertSelective" parameterType="com.shiro.sys.pojo.Group">
     insert into group
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -59,7 +59,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.shiro.pojo.Group">
+  <update id="updateByPrimaryKeySelective" parameterType="com.shiro.sys.pojo.Group">
     update group
     <set>
       <if test="parentId != null">
@@ -74,7 +74,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.shiro.pojo.Group">
+  <update id="updateByPrimaryKey" parameterType="com.shiro.sys.pojo.Group">
     update group
     set parent_id = #{parentId,jdbcType=INTEGER},
       name = #{name,jdbcType=VARCHAR},

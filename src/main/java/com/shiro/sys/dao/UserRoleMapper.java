@@ -16,5 +16,6 @@ public interface UserRoleMapper {
     int updateByPrimaryKey(UserRole record);
     
     // 自定义
-//    int batchDelete()
+
+    
 }

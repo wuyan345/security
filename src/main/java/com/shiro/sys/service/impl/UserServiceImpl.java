@@ -12,9 +12,6 @@ import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.authz.annotation.RequiresAuthentication;
-import org.apache.shiro.authz.annotation.RequiresGuest;
-import org.apache.shiro.authz.annotation.RequiresUser;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
@@ -25,8 +22,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.shiro.sys.common.BaseException;
+import com.shiro.sys.common.exception.BaseException;
 import com.shiro.sys.common.Res;
+import com.shiro.sys.common.annotation.Log;
 import com.shiro.sys.dao.UserMapper;
 import com.shiro.sys.pojo.User;
 import com.shiro.sys.service.IUserRoleService;
@@ -44,13 +42,8 @@ public class UserServiceImpl implements IUserService {
 	private IUserRoleService iUserRoleService;
 	
 	@Override
-	public Map test() {
-//		User user = new User();
-//		userMapper.insert(user);
-//		logger.info("抛出异常运行到这里");
-//		int a = 1/0;
-//		throw new RuntimeException("error occurs");
-//		throw new SQLException("error occurs");
+	public Map<?, ?> test() {
+		System.out.println("进入UserServiceImpl.test()");
 		return null;
 	}
 
@@ -84,6 +77,7 @@ public class UserServiceImpl implements IUserService {
 			}
 			catch (AuthenticationException ae) {
 				logger.error("unkown error");
+				return Res.errorMsg("未知错误");
 			}
 		}
 		

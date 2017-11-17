@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.shiro.sys.common.BaseException;
+import com.shiro.sys.common.exception.BaseException;
 import com.shiro.sys.common.Res;
 import com.shiro.sys.dao.RoleGroupMapper;
 import com.shiro.sys.pojo.RoleGroup;

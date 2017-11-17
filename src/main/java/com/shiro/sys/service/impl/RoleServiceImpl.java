@@ -6,15 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.shiro.sys.common.BaseException;
+import com.shiro.sys.common.exception.BaseException;
 import com.shiro.sys.common.Res;
-import com.shiro.sys.dao.MenuMapper;
-import com.shiro.sys.dao.RoleGroupMapper;
 import com.shiro.sys.dao.RoleMapper;
 import com.shiro.sys.pojo.Group;
 import com.shiro.sys.pojo.Menu;
 import com.shiro.sys.pojo.Role;
-import com.shiro.sys.pojo.RoleGroup;
 import com.shiro.sys.service.IGroupService;
 import com.shiro.sys.service.IMenuService;
 import com.shiro.sys.service.IRoleGroupService;

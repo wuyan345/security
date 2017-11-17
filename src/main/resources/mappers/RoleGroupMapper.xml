@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.shiro.dao.RoleGroupMapper">
-  <resultMap id="BaseResultMap" type="com.shiro.pojo.RoleGroup">
+<mapper namespace="com.shiro.sys.dao.RoleGroupMapper">
+  <resultMap id="BaseResultMap" type="com.shiro.sys.pojo.RoleGroup">
     <constructor>
       <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="role_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
@@ -21,13 +21,13 @@
     delete from role_group
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.shiro.pojo.RoleGroup">
+  <insert id="insert" parameterType="com.shiro.sys.pojo.RoleGroup">
     insert into role_group (id, role_id, group_id
       )
     values (#{id,jdbcType=INTEGER}, #{roleId,jdbcType=INTEGER}, #{groupId,jdbcType=INTEGER}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.shiro.pojo.RoleGroup">
+  <insert id="insertSelective" parameterType="com.shiro.sys.pojo.RoleGroup">
     insert into role_group
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -52,7 +52,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.shiro.pojo.RoleGroup">
+  <update id="updateByPrimaryKeySelective" parameterType="com.shiro.sys.pojo.RoleGroup">
     update role_group
     <set>
       <if test="roleId != null">
@@ -64,10 +64,15 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.shiro.pojo.RoleGroup">
+  <update id="updateByPrimaryKey" parameterType="com.shiro.sys.pojo.RoleGroup">
     update role_group
     set role_id = #{roleId,jdbcType=INTEGER},
       group_id = #{groupId,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+  <delete id="deleteByRoleId" parameterType="integer">
+  	delete from role_group
+  	where role_id = #{roleId}
+  </delete>
 </mapper>

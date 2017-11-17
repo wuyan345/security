@@ -45,8 +45,8 @@ public class MyRealm extends AuthorizingRealm{
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
 		logger.info("shiro调用doGetAuthorizationInfo()");
-		Integer userId = (Integer)principals.fromRealm(getName()).iterator().next();
-		Role role = roleMapper.selectByPrimaryKey(userId);
+		User user = (User)principals.fromRealm(getName()).iterator().next();
+		Role role = roleMapper.selectByPrimaryKey(user.getId());
 		if(role == null)
 			return null;
 		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
